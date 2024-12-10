@@ -1,14 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Header from './Header.jsx'
-import Form from './Form.jsx'
-import Checkbox_form from './Checkbox_form.jsx'
+import App from './App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Header></Header>
-    <Form></Form>
-    <Checkbox_form></Checkbox_form>
+    <App></App>
   </StrictMode>,
 )

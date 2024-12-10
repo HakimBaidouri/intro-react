@@ -2,34 +2,48 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Header from './Header'
+import Form from './Form'
+import Todo_list from './Todo_list'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const initialTodos = [
+    { id: 0, message: "My first todo", statue: "As not done" },
+    { id: 1, message: "My second todo", statue: "As not done" }
+  ];
+  const [todos, setTodos] = useState(initialTodos);
+
+  const addTodo = (todoMessage) => {
+    const newTodo = {
+      id : Date.now(),
+      message : todoMessage,
+      statue : "As not done"
+    }
+    return setTodos([...todos, newTodo])
+  }
+
+  const handleCheckboxChange = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => {
+        if(todo.id === id){
+          return {
+            id : todo.id,
+            message : todo.message,
+            statue : todo.statue === "As done" ? "As not done" : "As done"
+          }
+        } 
+        return todo
+      })
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <Header />
+      <Form addTodo={addTodo}/>
+      <Todo_list todos={todos} handleCheckboxChange={handleCheckboxChange}/>
+    </div>
+  );
 }
 
 export default App
