@@ -14,11 +14,10 @@ const Form = ({ addTodo }) => {
     }
     
     return (
-        <div className="Todo-form">
+        <div className="form">
             <form onSubmit={handleSubmit}>
-                <input type="text" name="Todo" placeholder="Type a new todo" ref={ inputRef }/>
-                <br />
-                <button type="submit" className="Add-todo">Add Todo</button>
+                <input type="text" name="Todo" placeholder="Type a new todo" ref={inputRef}/>
+                <button type="submit">Add Todo</button>
             </form>
         </div>
     )

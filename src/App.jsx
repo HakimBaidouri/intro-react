@@ -3,10 +3,18 @@ import './App.css'
 import Header from './Header'
 import Form from './Form'
 import Todo_list from './Todo_list'
+import ThemeToggle from './ThemeToggle'
 
 const LSKEY = "MyTodoApp";
+const THEME_KEY = "MyTodoAppTheme";
 
 function App() {
+
+  // État du thème
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = window.localStorage.getItem(THEME_KEY);
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
 
   // Initialisation des todos depuis le localStorage ou valeurs par défaut
   const [todos, setTodos] = useState(() => {
@@ -43,13 +51,25 @@ function App() {
     );
   };
 
+  // Effet pour mettre à jour l'attribut data-theme sur le document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    window.localStorage.setItem(THEME_KEY, JSON.stringify(isDark));
+  }, [isDark]);
+
+  // Fonction pour basculer le thème
+  const toggleTheme = () => {
+    setIsDark(prev => !prev);
+  };
+
   // Mettre à jour le localStorage à chaque changement de l'état todos
   useEffect(() => {
     window.localStorage.setItem(LSKEY, JSON.stringify(todos));
   }, [todos]); // Dépendance sur todos
 
   return (
-    <div className="App">
+    <div className="container">
+      <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
       <Header />
       <Form addTodo={addTodo} />
       <Todo_list todos={todos} handleCheckboxChange={handleCheckboxChange} />

@@ -3,22 +3,24 @@ import React, { useState } from "react";
 const Todo_list = ({todos, handleCheckboxChange}) => {
 
     return (
-        <div className="Checkbox-form">
-            <h2>Todos</h2>
-            <form>
+        <div className="todo-container">
+            <h2>My Tasks</h2>
+            <ul className="todo-list">
                 {todos.map((todo) => (
-                    <label key={todo.id} htmlFor={`todo-${todo.id}`}>
+                    <li 
+                        key={todo.id} 
+                        className={`todo-item ${todo.statue === "As done" ? "completed" : ""}`}
+                    >
                         <input
                             type="checkbox"
                             id={`todo-${todo.id}`}
                             checked={todo.statue === "As done"}
-                            onChange={() => handleCheckboxChange(todo.id)} // Met à jour le statut
-                        />{" "}
-                        {todo.message}
-                        <br />
-                    </label>
+                            onChange={() => handleCheckboxChange(todo.id)}
+                        />
+                        <span>{todo.message}</span>
+                    </li>
                 ))}
-            </form>
+            </ul>
         </div>
     );
 };
